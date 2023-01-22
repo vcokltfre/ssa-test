@@ -21,12 +21,12 @@ func Optimise(ops []Operation) []Operation {
 		ssaName := fmt.Sprintf("%s-%d", op.Destination, assignments[op.Destination])
 		assignMap[ssaName] = op.Destination
 		assignments[op.Destination]++
-		offset := 0
 
 		// Handle single-value case
 		if len(op.Values) == 1 {
 			val := getValueSSA(op.Values[0])
 			if val.Reference != "" {
+				offset := 0
 				if val.Reference == op.Destination {
 					offset = 1
 				}
@@ -60,6 +60,7 @@ func Optimise(ops []Operation) []Operation {
 		values := []string{}
 
 		if v1.Reference != "" {
+			offset := 0
 			if v1.Reference == op.Destination {
 				offset = 1
 			}
@@ -75,6 +76,7 @@ func Optimise(ops []Operation) []Operation {
 		}
 
 		if v2.Reference != "" {
+			offset := 0
 			if v2.Reference == op.Destination {
 				offset = 1
 			}
